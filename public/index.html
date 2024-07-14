@@ -6,50 +6,6 @@
     <title>실시간 투표 시스템</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        .clearfix:after {
-            content: '';
-            display: block;
-            clear: both;
-        }
-
-        header {
-            background: #ebebeb;
-        }
-
-        .container {
-            width: 960px;
-            margin: 0 auto;
-        }
-
-        header h1 {
-            float: left;
-        }
-
-        header h1 a {
-            line-height: 60px;
-            text-decoration: none;
-        }
-
-        header nav {
-            float:right;
-        }
-
-        header nav ul li {
-            float:left;
-            list-style: none;
-            margin-left:20px;
-        }
-
-        header nav ul li a {
-            text-decoration: none;
-            line-height: 60px;
-        }
-
         #loading {
             position: fixed;
             width: 100%;
@@ -75,18 +31,6 @@
         <img src="assets/img/logo.svg" alt="로딩 중">
     </div>
 
-    <div id="head" class="container clearfix">
-        <h1><a href="#">logo</a></h1>
-        <nav>
-            <ul class="clearfix">
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Sign up</a></li>
-                <li><a href="#">Site Map</a></li>
-                <li><a href="#">Vote</a></li>
-            </ul>
-        </nav>
-    </div>
-
     <div id="vote-container">
         <h1>실시간 투표하기</h1>
         <p>현재 찬성 수: <span id="vote-count">0</span></p>
@@ -99,7 +43,6 @@
         socket.on('updateVoteCount', (count) => {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('vote-container').style.display = 'block';
-            document.getElementById('head').style.display = 'block';
         });
     </script>
 </body>
