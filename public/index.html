@@ -17,7 +17,7 @@
             z-index: 1000;
         }
 
-        #content {
+        #vote-container {
             display: none;
         }
     </style>
@@ -37,13 +37,8 @@
     <script>
         const socket = io();
         socket.on('updateVoteCount', (count) => {
-            document.getElementById('voteCount').innerText = 'Vote Count: ' + count;
             document.getElementById('loading').style.display = 'none';
-            document.getElementById('content').style.display = 'block';
-        });
-
-        document.getElementById('voteButton').addEventListener('click', () => {
-            socket.emit('vote', { user: 'Anonymous' });
+            document.getElementById('vote-container').style.display = 'block';
         });
     </script>
 </body>
