@@ -1,0 +1,34 @@
+name: Deploy to Koyeb
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Lint and Test
+      run: npm test
+
+    - name: Deploy to Koyeb
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      run: |
+        echo "Deploying to Koyeb..."
+        npm run build
+        npm start
