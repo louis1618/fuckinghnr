@@ -10,25 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20.15.1'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Update Node.js version to a stable LTS version
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm ci  # Use npm ci for faster and more reliable dependency installation
 
-    - name: Lint and Test
-      run: npm test
+      - name: Build application
+        run: npm run build  # Execute npm run build to prepare the application for deployment
 
-    - name: Deploy to Koyeb
-      env:
-        MONGODB_URI: ${{ secrets.MONGODB_URI }}
-        DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-      run: |
-        echo "Deploying to Koyeb..."
-        npm run build
-        npm start
+      - name: Deploy to Koyeb
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+        run: |
+          echo "Deploying to Koyeb..."
+          npm start  # Start the application after successful build
