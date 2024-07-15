@@ -6,12 +6,21 @@
     <title>실시간 투표 시스템</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
+                body.loading > *:not(#loading) {
+            display: none;
+        }
+
+        body.loaded #loading {
+            display: none;
+        }
+
         #loading {
             position: fixed;
             width: 100%;
-            height: 100%;
+            height: 90%;
             background: white;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -19,16 +28,48 @@
 
         #loading img {
             max-width: 160px;
+            margin-bottom: 20px;
         }
 
-        #vote-container, #vote {
-            display: none;
+        #progress-container {
+            width: 40%;
+            height: 5px;
+            background: #f3f3f3;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: -30px;
+        }
+
+        #progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, #76c48c, #6dd59c);
+            transition: width 0.3s;
+        }
+
+        #loading-text {
+            position: absolute;
+            bottom: 0px;
+            height: 0%;
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        #vote-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
     </style>
 </head>
-<body>
+<body class="loading">
     <div id="loading">
         <img src="assets/img/logo.svg" alt="로딩 중">
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div id="loading-text">해누리 조지는 중...</div>
     </div>
 
     <div id="vote-container">
@@ -36,14 +77,28 @@
         <p>현재 찬성 수: <span id="vote-count">0</span></p>
         <button id="vote-button">찬성</button>
     </div>
+    
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/script.js"></script>
+    
     <script>
-        const socket = io();
-        socket.on('updateVoteCount', (count) => {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('vote-container').style.display = 'block';
+        const progressBar = document.getElementById('progress-bar');
+
+        document.addEventListener("DOMContentLoaded", () => {
+            progressBar.style.width = '50%';
         });
+
+        window.onload = () => {
+            progressBar.style.width = '100%';
+            const socket = io();
+            socket.on('updateVoteCount', (count) => {
+                document.getElementById('vote-count').innerText = count;
+                setTimeout(() => {
+                document.body.classList.remove('loading');
+                document.body.classList.add('loaded');
+            }, 500);
+            });
+        };
     </script>
 </body>
 </html>
