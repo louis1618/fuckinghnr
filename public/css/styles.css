@@ -1,9 +1,127 @@
+body.loading > *:not(#loading) {
+    display: none;
+}
+
+body.loaded #loading {
+    display: none;
+}
+
+#loading {
+    position: fixed;
+    width: 100%;
+    height: 90%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#loading img {
+    max-width: 160px;
+    margin-bottom: 20px;
+}
+
+#progress-container {
+    width: 40%;
+    height: 5px;
+    background: #f3f3f3;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: -30px;
+}
+
+#progress-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(to right, #76c48c, #6dd59c);
+    transition: width 0.3s;
+}
+
+#loading-text {
+    position: absolute;
+    bottom: 0px;
+    height: 0%;
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+}
+
+#menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 230px;
+    height: 100%;
+    background-color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    z-index: 999;
+}
+
+#menu img.logo {
+    width: 140px;
+    margin-bottom: 20px;
+}
+
+#menu ul {
+    list-style: none;
+    padding: 0%;
+    width: 100%;
+}
+
+#menu ul li {
+    width: 100%;
+    margin: 10px 0;
+}
+
+#menu ul li a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    position: relative;
+}
+
+#menu ul li a img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    filter: invert(1);
+    vertical-align: middle;
+}
+
 #vote-container {
-    text-align: center;
-    margin-top: 50px;
+    margin-left: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #vote-button {
     font-size: 18px;
     padding: 10px 20px;
+}
+
+.icon-button::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background-color: rgba(199, 191, 191, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50px;
+}
+
+.icon-button:hover::before,
+.icon-button:focus::before,
+.icon-button:active::before {
+    opacity: 1;
 }
