@@ -49,7 +49,6 @@
             progressBar.style.width = percentComplete + '%';
         };
 
-<<<<<<< HEAD
         const resourceLoadListener = (entryList) => {
             const entries = entryList.getEntries();
             loadedResources += entries.length;
@@ -68,34 +67,22 @@
                 databaseLoaded = true;
                 updateProgressBar();
 
-=======
-        window.onload = () => {
-            progressBar.style.width = '70%';
-            const socket = io();
-            socket.on('updateVoteCount', (count) => {
-                document.getElementById('vote-count').innerText = count;
-                progressBar.style.width = '100%';
->>>>>>> 023203eb505c7c13873cf382400ed54bb71214fc
                 setTimeout(() => {
                     document.body.classList.remove('loading');
                     document.body.classList.add('loaded');
                 }, 500);
             });
         };
-<<<<<<< HEAD
 
         window.addEventListener('load', () => {
             loadedResources = initialResources;
             updateProgressBar();
             fetchDatabaseData();
         });
-=======
-        
-        const isAdmin = true
+
+        const isAdmin = true;
         if (isAdmin) {
             document.getElementById('admin-category').style.display = 'block';
         }
->>>>>>> 023203eb505c7c13873cf382400ed54bb71214fc
     </script>
 </body>
-</html>
