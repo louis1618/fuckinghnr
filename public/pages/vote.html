@@ -5,34 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jokga School Alpha</title>
     <link rel="icon" href="assets/img/web/favicon.png"/> 
-    <link rel="stylesheet" href="css/styles.css">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            text-align: center;
-        }
-        .vote-link {
-            font-size: 20px;
-            text-decoration: none;
-            color: #007BFF;
-            border: 2px solid #007BFF;
-            padding: 10px 20px;
-            border-radius: 5px;
-        }
-        .vote-link:hover {
-            background-color: #007BFF;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
+
 <body class="loading">
     <div id="loading">
         <img src="assets/img/logo.svg" alt="로딩 중">
@@ -73,11 +48,15 @@
         </ul>
     </div>
 
-    <div class="container">
-        <a href="/vote" class="vote-link">투표하러 가기</a>
+    <div id="vote-container">
+        <h1>[진행 중] 허은정 탄핵</h1>
+        <h2>누적 동의 수: <span id="vote-count">0</span></h2>
+        <span> (MongoDB DATABASE_NAME : fuckinghnr VALUE : COUNT)</span></p>
+        <button id="vote-button">동의</button>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
+    <script src="../js/script.js"></script>
 
     <script>
         const progressBar = document.getElementById('progress-bar');
@@ -103,10 +82,17 @@
         let databaseLoaded = false;
 
         const fetchDatabaseData = () => {
-            setTimeout(() => {
+            const socket = io();
+            socket.on('updateVoteCount', (count) => {
+                document.getElementById('vote-count').innerText = count;
+                databaseLoaded = true;
+                updateProgressBar();
+
+                setTimeout(() => {
                     document.body.classList.remove('loading');
                     document.body.classList.add('loaded');
-            }, 500);
+                }, 500);
+            });
         };
 
         window.addEventListener('load', () => {

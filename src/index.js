@@ -6,6 +6,7 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port = 3000;
+require('dotenv').config();
 
 const uri = process.env.MONGODB_URI;
 const dbName = process.env.DATABASE_NAME;
@@ -31,11 +32,51 @@ async function connectToMongoDB() {
 
 connectToMongoDB();
 
-app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.get('/', (req, res) => {
+app.get(['/', '/home'], (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'index.html'));
+});
+
+app.get('/vote', (req, res) => {
+    res.render
+    res.sendFile(path.join(__dirname, '../public/pages', 'vote.html'));
+});
+
+app.get('/community', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/pages', 'community.html'));
+});
+
+app.get('/proxy', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/pages', 'proxy.html'));
+});
+
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/pages', 'admin.html'));
+});
+
+app.get('/pages/vote.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/pages', 'vote.html'));
+});
+
+app.get('/pages/community.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/pages', 'community.html'));
+});
+
+app.get('/pages/admin.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/pages', 'admin.html'));
+});
+
+app.get('/pages/proxy.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/pages', 'proxy.html'));
+});
+
+app.use('/pages', (req, res) => {
+    res.status(403).send('Access Forbidden');
+});
+
+app.use((req, res) => {
+    res.status(404).send('Page Not Found');
 });
 
 function getClientInfo(socket) {
