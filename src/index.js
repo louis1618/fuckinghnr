@@ -6,7 +6,6 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port = 3000;
-require('dotenv').config();
 
 const uri = process.env.MONGODB_URI;
 const dbName = process.env.DATABASE_NAME;
@@ -33,10 +32,10 @@ async function connectToMongoDB() {
 connectToMongoDB();
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
 function getClientInfo(socket) {

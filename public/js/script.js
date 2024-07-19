@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const socket = io(); // 서버와의 WebSocket 연결
-
+    const socket = io();
     const voteButton = document.getElementById('vote-button');
     const voteCountDisplay = document.getElementById('vote-count');
     let voteCount = 0;
@@ -9,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.emit('vote');
     });
 
-    // 서버에서 'updateVoteCount' 이벤트를 수신하여 화면 업데이트
     socket.on('updateVoteCount', (newCount) => {
         voteCount = newCount;
         voteCountDisplay.textContent = voteCount;
@@ -17,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     socket.on('connect', () => {
         console.log('서버에 연결되었습니다.');
-        socket.emit('getInitialVoteCount'); // 초기 데이터 요청 가능
+        socket.emit('getInitialVoteCount'); // 초기 데이터
     });
 
     socket.on('disconnect', () => {
